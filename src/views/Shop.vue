@@ -242,9 +242,9 @@
           </div>
           <div class="mont" style="margin-top: -20px;">
             <div class="d-lg-flex gap-5 w-100"> 
-              <div class="w-lg-50"><img class="w-100 pointer" :src="selectedProduct.imageUrl" alt="" style="height: 350px;"></div>
+              <div class="w-lg-50"><img class="w-100 pointer" :src="selectedProduct.imageUrl" alt="" style="height: 320px;"></div>
               <div class="w-lg-50 position-relative">
-                <div style="overflow-y: scroll; max-height: 330px;">
+                <div style="overflow-y: scroll; max-height: 270px;">
                 <div class="mb-2 text-dark fw-semibold fs-5">{{ selectedProduct.name }}</div>
                 <div class="mb-2 text-dark  fs-5">£&nbsp;{{ selectedProduct.price }}</div>
                 <div class="mb-4">
