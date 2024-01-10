@@ -51,12 +51,16 @@
                   <div class="mb-3 col-lg-6">
                     <label class="form-label">Product Category</label>
                     <select name="category" v-model="product.category_id" class="form-select" id="category">
-                        <option v-for="(i, value) in getCategories" :value="i.id" selected>{{ i.name }}</option>
+                        <option v-for="(i, value) in getCategories" :value="i.id" selected :key="i">{{ i.name }}</option>
                     </select>
                   </div>
                   <div class="mb-3 col-lg-6">
                     <label class="form-label">Product Price</label>
                     <input type="number" v-model="product.price" class="form-control" required>
+                  </div>
+                  <div class="mb-3 col-lg-6">
+                    <label class="form-label">Maximum Price</label>
+                    <input type="number" v-model="product.max_price" class="form-control" required>
                   </div>
                   <!-- input -->
                   <div class="mb-3 col-lg-6">
@@ -117,6 +121,7 @@ export default {
                 weight: null,
                 image_url: null,
                 price: null,
+                max_price: null,
                 description: null
             },
             imageFile: null,
@@ -156,6 +161,7 @@ export default {
             formData.append("description", this.product.description);
             formData.append("quantity", this.product.quantity);
             formData.append("price", this.product.price);
+            formData.append("max_price", this.product.max_price);
             formData.append("category_id", this.product.category_id);
 
             const result = await this.$store.dispatch('addProduct', formData);
