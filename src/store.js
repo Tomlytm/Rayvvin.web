@@ -31,6 +31,7 @@ const store = createStore({
         singleStoreOrder: {},
         selectedProduct: {
             id: null,
+            storeId: null,
             name: '',
             price: null,
             imageUrl: '',
@@ -483,7 +484,21 @@ const store = createStore({
 
             } 
             
-        }
+        },
+        async sendMessage({ commit }, data) {
+            try {
+                const result = await axios.post('/api/v1/chat/conversation', data);
+                if (result.data.success) {        
+                    return true;
+                }
+
+            } catch(error) {
+                console.log("sendMessage", error);
+                return false;
+
+            } 
+            
+        },
     },
     mutations: {
         setMerchantHasCompletedOnboardingStatus(state, data) {
@@ -577,6 +592,7 @@ const store = createStore({
           clearSelectedProduct(state) {
             state.selectedProduct = {
               id: null,
+              storeId: null,
               name: '',
               price: null,
               imageUrl: '',
