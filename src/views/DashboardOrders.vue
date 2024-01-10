@@ -1,7 +1,7 @@
 <template>
     <DashboardHeader />
 
-    <div class="main-wrapper">
+    <div class="main-wrapper mont">
             <!-- navbar vertical -->
             
           <DashboardSideNav />
@@ -30,7 +30,7 @@
         <div class="row">
           <div class="col-xl-12 col-12 mb-5">
             <!-- card -->
-            <div class="card h-100 card-lg">
+            <div class="card h-100 card-lg shadow">
               <div class=" p-6 ">
                 <div class="row justify-content-between">
                   <div class="col-md-4 col-12 mb-2 mb-md-0">
@@ -69,7 +69,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(order, index) in fetchStoreOrders">
+                      <div class="text-danger p-3 text-center" v-if="fetchStoreOrders.length < 1">No orders found</div>
+                      <tr v-else v-for="(order, index) in fetchStoreOrders" :key="index">
                         <td><router-link :to="{name: 'DashboardSingleOrder',  query: {'orderno': order.order_number}}" class="text-reset">{{ order.order_number }}</router-link></td>
                         <td>{{ order.amount }}</td>
                         <td>{{ order.order_items.length }}</td>

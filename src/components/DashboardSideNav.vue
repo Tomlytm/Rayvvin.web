@@ -1,5 +1,5 @@
 <template>
-      <nav class="navbar-vertical-nav d-none d-xl-block ">
+      <nav class="navbar-vertical-nav d-none d-xl-block shadow-sm ">
                 <div class="navbar-vertical">
                                 <div class="px-4 py-5">
                                     <router-link :to="{'name': 'home'}" class="navbar-brand">
@@ -29,7 +29,7 @@
                                             </router-link>
                                         </li>
                                         <li class="nav-item">
-                                            <router-link class="nav-link" :class="{'disabled': fetchStoreStatus === 'inactive'}" active-class="active" :to="{name: 'DashboardOrders'}">
+                                            <router-link class="nav-link"  active-class="active" :to="{name: 'DashboardOrders'}">
                                                 <div class="d-flex align-items-center">
                                                     <span class="nav-link-icon"> <i class="bi bi-bag"></i></span>
                                                     <span class="nav-link-text">Orders</span>

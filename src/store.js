@@ -28,7 +28,14 @@ const store = createStore({
         storeProducts: [],
         storeOrders: [],
         dashboardData: {},
-        singleStoreOrder: {}
+        singleStoreOrder: {},
+        selectedProduct: {
+            id: null,
+            name: '',
+            price: null,
+            imageUrl: '',
+            description: ''
+          },
     },
     getters: {
         singleStoreOrder: state => {
@@ -564,6 +571,19 @@ const store = createStore({
             state.token = '';
             state.user = {};
         },
+        setSelectedProduct(state, productDetails) {
+            state.selectedProduct = { ...productDetails };
+          },
+          clearSelectedProduct(state) {
+            state.selectedProduct = {
+              id: null,
+              name: '',
+              price: null,
+              imageUrl: '',
+              description: ''
+              // other details you want to clear
+            };
+          },
     }
 })
 

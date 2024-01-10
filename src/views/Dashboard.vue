@@ -1,7 +1,7 @@
 <template>
     <DashboardHeader />
 
-    <div class="main-wrapper">
+    <div class="main-wrapper mont">
             <!-- navbar vertical -->
             
           <DashboardSideNav />
@@ -13,7 +13,7 @@
                     <div class="row mb-8">
                         <div class="col-md-12">
                             <!-- card -->
-                            <div class="card bg-light border-0 rounded-4"
+                            <div class="card bg-light shadow-sm border-0 rounded-4"
                                 v-bind:style="{ 'background-image': 'url(' + image + ')' }"
                                 style="background-repeat: no-repeat; background-size: cover; background-position: right;">
                                 <div class="card-body p-lg-12">
@@ -23,9 +23,9 @@
                                     <router-link :to="{name: 'DashboardProducts'}" class="btn btn-primary" v-if="getMerchantStore.status === 'active'">
                                         Manage your products
                                     </router-link>
-                                    <router-link :to="{name: 'DashboardBilling'}" class="btn btn-primary" v-else>
+                                    <!-- <router-link :to="{name: 'DashboardBilling'}" class="btn btn-primary" v-else>
                                         Active your account
-                                    </router-link>
+                                    </router-link> -->
                                 </div>
                             </div>
                         </div>
@@ -35,7 +35,7 @@
                         <div class="row">
                             <div class="col-lg-4 col-12 mb-6">
                                 <!-- card -->
-                                <div class="card h-100 card-lg">
+                                <div class="card shadow-sm h-100 card-lg">
                                     <!-- card body -->
                                     <div class="card-body p-6">
                                         <!-- heading -->
@@ -58,7 +58,7 @@
                             </div>
                             <div class="col-lg-4 col-12 mb-6">
                                 <!-- card -->
-                                <div class="card h-100 card-lg">
+                                <div class="card shadow-sm h-100 card-lg">
                                     <!-- card body -->
                                     <div class="card-body p-6">
                                         <!-- heading -->
@@ -81,7 +81,7 @@
                             </div>
                             <div class="col-lg-4 col-12 mb-6">
                                 <!-- card -->
-                                <div class="card h-100 card-lg">
+                                <div class="card shadow-sm h-100 card-lg">
                                     <!-- card body -->
                                     <div class="card-body p-6">
                                         <!-- heading -->
@@ -109,7 +109,7 @@
                     <div class="row ">
                         <div class="col-xl-8 col-lg-6 col-md-12 col-12 mb-6">
                             <!-- card -->
-                            <div class="card h-100 card-lg">
+                            <div class="card shadow-sm h-100 card-lg">
                                 <div class="card-body p-6">
                                     <!-- heading -->
                                     <div class="d-flex justify-content-between">
@@ -137,7 +137,7 @@
                         </div>
                         <div class="col-xl-4 col-lg-6 col-12 mb-6">
                             <!-- card -->
-                            <div class="card h-100 card-lg">
+                            <div class="card shadow-sm h-100 card-lg">
                                 <!-- card body -->
                                 <div class="card-body p-6">
                                     <!-- heading -->
@@ -182,7 +182,7 @@
                     <!-- row -->
                     <div class="row ">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-12 mb-6">
-                            <div class="card h-100 card-lg">
+                            <div class="card shadow-sm h-100 card-lg">
                                 <!-- heading -->
                                 <div class="p-6">
                                     <h3 class="mb-0 fs-5">Recent Order</h3>
