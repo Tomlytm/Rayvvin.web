@@ -62,7 +62,10 @@ const router = createRouter({
     {
       path: '/stores',
       name: 'stores',
-      component: Stores,
+      component: PublicLayout,
+      children: [
+        {path: '', component: Stores}
+      ],
       beforeEnter: (to, from) => {
         if (store.getters.isAuthenticated && store.getters.loggedInUser.role === 'merchant') {
           return from.path
@@ -72,7 +75,10 @@ const router = createRouter({
     {
       path: '/blog',
       name: 'blog',
-      component: Blogs,
+      component: PublicLayout,
+      children: [
+        {path: '', component: Blogs}
+      ],
       beforeEnter: (to, from) => {
         if (store.getters.isAuthenticated && store.getters.loggedInUser.role === 'merchant') {
           return from.path

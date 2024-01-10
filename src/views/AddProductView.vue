@@ -1,7 +1,7 @@
 <template>
     <DashboardHeader />
 
-    <div class="main-wrapper">
+    <div class="main-wrapper mont">
             <!-- navbar vertical -->
             
           <DashboardSideNav />

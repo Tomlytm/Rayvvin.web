@@ -1,5 +1,4 @@
 <template>
-       <Header />
 
     <body  class="body-container mont">
   <!-- Shop Cart -->

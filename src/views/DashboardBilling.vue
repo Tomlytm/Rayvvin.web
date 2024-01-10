@@ -35,35 +35,7 @@
                             </div>
                         </div>
 
-                        <div class="card payment-card" v-show="activateButtonClicked">
-                            <div class="card-header">
-                        You will be charged £50 / month for plan
-                            </div>
-
-                            <div class="card-body">
-                                <form id="payment-form">
-                                        <div class="col-xl-4 col-lg-4 card-name-custom">
-                                            <div class="form-group">
-                                                <label for="">Name</label>
-                                                <input type="text" name="name" id="card-holder-name" class="form-control" value="" placeholder="Name on the card">
-                                            </div>
-                                        </div>
-            
-                                        <div class="col-xl-4 col-lg-4 ">
-                                            <div class="form-group">
-                                                <label for="">Card details</label>
-                                                <div id="card-element"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-12 col-lg-12">
-                                        <hr>
-                                            <button type="submit" class="btn btn-primary" id="card-button">Purchase</button>
-                                        </div>
-            
-                                </form>
-    
-                            </div>
-                        </div>
+                       
                       
                     </div>
                 </div>

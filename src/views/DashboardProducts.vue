@@ -1,7 +1,7 @@
 <template>
     <DashboardHeader />
 
-    <div class="main-wrapper">
+    <div class="main-wrapper mont">
             <!-- navbar vertical -->
             
           <DashboardSideNav />
@@ -34,7 +34,7 @@
         <div class="row ">
           <div class="col-xl-12 col-12 mb-5">
             <!-- card -->
-            <div class="card h-100 card-lg">
+            <div class="card h-100 card-lg shadow">
               <div class="px-6 py-6 ">
                 <div class="row justify-content-between">
                   <!-- form -->

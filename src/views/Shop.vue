@@ -111,8 +111,7 @@
                           <div class="card-product-action">
                             <button
                               class="btn btn-action"
-                              data-bs-toggle="modal"
-                              data-bs-target="#quickViewModal"
+                              @click="openQuickViewModal(product)"
                             >
                               <i
                                 class="bi bi-eye"
@@ -239,13 +238,15 @@
         <div class="modal-content  p-4">
           <div class="modal-header border-0">
             <!-- <h5 class="modal-title fs-3 fw-bold" id="quickViewModalLabel">Sign In For the Best Experience</h5><br /> -->
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close" @click="closeModal" aria-label="Close"></button>
           </div>
           <div class="mont" style="margin-top: -20px;">
             <div class="d-lg-flex gap-5 w-100"> 
-              <div class="w-lg-50"><img class="w-100 pointer" src="/assets/images/dummy-img.svg" alt=""></div>
-              <div class="w-lg-50">
-                <div class="mb-2 text-dark fw-semibold fs-5">Product Name</div>
+              <div class="w-lg-50"><img class="w-100 pointer" :src="selectedProduct.imageUrl" alt="" style="height: 350px;"></div>
+              <div class="w-lg-50 position-relative">
+                <div style="overflow-y: scroll; max-height: 330px;">
+                <div class="mb-2 text-dark fw-semibold fs-5">{{ selectedProduct.name }}</div>
+                <div class="mb-2 text-dark  fs-5">£&nbsp;{{ selectedProduct.price }}</div>
                 <div class="mb-4">
                           <!-- rating --><small class="text-dark" style="font-size: 17px;">
                             <i class="bi bi-star-fill"></i>
@@ -255,7 +256,7 @@
                             <i class="bi bi-star-half"></i
                           ></small>
                         </div>
-                <div class="fs-9 fw-normal mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</div>
+                <div class="fs-9 fw-normal mb-3">{{ selectedProduct.description }}</div>
                 
                         <div class="mb-4">
                           <div class="mb-3 fs-9 ">
@@ -268,10 +269,12 @@
               <input type="button" value="+" class="button-plus btn btn-sm  border-dark rounded-0 shadow" data-field="quantity" >
             </div>
                         </div>
+                        <div @click="togglePopup" class="mb-4  fs-9 cursor-pointer" style="cursor: pointer; color: #65b741;">
+                            Message Seller
+                          </div>
+                        </div>
                         <div>
-                          <button class="btn rounded-0 bg-dark w-100 text-white fw-normal mb-2">Add to Cart</button>
-                          <button class="btn rounded-0 border border-dark w-100 text-dark fw-normal"><a class="text-muted position-relative " data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightt"
-                href="#offcanvasExample" role="button" aria-controls="offcanvasRightt">Buy Now</a></button>
+                          <button    class="btn rounded-0 bg-dark w-100 text-white fw-normal mb-2 position-absolute bottom-0 mx-auto w-75">Add to Cart</button>
                           <!-- <button></button> -->
                         </div>
               </div>
@@ -295,10 +298,48 @@
     </div>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
+
   <div class="offcanvas-body">
     jk
   </div>
 </div>
+<div id="messagingPopup" :class="{ 'show': isPopupOpen }">
+    <span @click="togglePopup" class="close-btn">&times;</span>
+    <div class="popup-content mont ">
+      <div class="px-4 pt-3 fw-semibold">
+        Messaging
+
+        
+      </div>
+      <hr />
+       <div style="height: 35px;" class="mx-3 d-flex align-items-center mb-1 gap-3 px-3 shadow-sm w-75  bg-light rounded-1">
+          <i class="bi bi-search search-icon"></i>
+        <input placeholder="search messages" type="text" class=" border-0 bg-light">
+        
+        </div>
+      <div class="px-3"  style="overflow-y: scroll; height: 250px;">
+       
+<hr />
+<div>
+  <div style="cursor: pointer;" class="d-flex justify-content-between px-2 border-bottom pb-3 mb-2" v-for="(category, index) in 4" :key="index">
+    <div class="d-flex gap-3 align-items-center">
+      <div><img src="/assets/images/avatar-12.jpg" width="40px" height="40px" alt="user" class="rounded-circle"></div>
+    <div class="">
+      <div class="fw-semibold">Tootbrush</div>
+      <em class="" style="font-size:11px;">Hello, how much would you like to sell? </em>
+    </div>
+    </div>
+    <div class="fw-light " style="font-size:10px;">
+      Dec 2, 2023
+    </div>
+    
+  </div>
+</div>
+      </div>
+      <!-- Your messaging content goes here -->
+      
+    </div>
+  </div>
 
 </template>
   
@@ -308,7 +349,6 @@
 import Cart from "../components/Cart.vue";
 import Footer from "../components/Footer.vue";
 import { Bootstrap5Pagination } from "laravel-vue-pagination";
-import Header from "../components/Header.vue";
 import store from "../store";
 
 export default {
@@ -323,6 +363,8 @@ export default {
       categoryId: this.$route.query.categoryId,
       searchTerm: this.getSearch,
       selectedCategory: "all",
+      isPopupOpen: false,
+      animateIcon: false,
     };
   },
   methods: {
@@ -400,6 +442,34 @@ export default {
       // Do something with the filtered products...
       console.log(filteredProducts);
     },
+    async openQuickViewModal(product) {
+      // console.log(product.id)
+      
+    // Update the Vuex store with the selected product's details
+    this.$store.commit('setSelectedProduct', {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      imageUrl: product.image_url,
+      description: product.description,
+      // other details you want to store
+    });
+
+    // Open the modal here
+    // console.log('clicked')
+    $('#quickViewModal').modal('show');
+  },
+  closeModal() {
+    // Clear the selected product in the Vuex store
+    this.$store.commit('clearSelectedProduct');
+
+    // Close the modal
+    $('#quickViewModal').modal('hide');
+  },
+  togglePopup() {
+    $('#quickViewModal').modal('hide');
+      this.isPopupOpen = !this.isPopupOpen;
+    }
   
   },
   computed: {
@@ -414,8 +484,18 @@ export default {
     fetchCategories() {
       return store.getters.categories;
     },
+    selectedProduct() {
+    return this.$store.state.selectedProduct; // Assuming the state in your store is named 'selectedProduct'
   },
-  async created() {},
+  },
+  created() {
+    setInterval(() => {
+      this.animateIcon = true;
+      setTimeout(() => {
+        this.animateIcon = false;
+      }, 1000); // Duration of the animation in milliseconds
+    }, 5000); // Interval in milliseconds (15 seconds)
+  },
   async mounted() {
     const products = this.$store.getters.products;
     console.log("Fetched Products:", products.data); // Log fetched products
@@ -449,5 +529,55 @@ export default {
 <style>
 .text-green {
   color: green !important; /* Define your desired green color */
+}
+#messagingPopup {
+      position: fixed;
+      bottom: 0px;
+      right: 10px;
+      width: 400px;
+      height: 400px;
+      background-color: #fff;
+      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      display: none;
+    }
+
+    #messagingPopup.show {
+      display: block;
+    }
+
+    /* Styles for the close button */
+    .close-btn {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 20px;
+      color: #999;
+    }
+    .fixed-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    #messageIcon {
+      filter: hue-rotate(220deg)
+}
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.bounce-animation {
+  animation: bounce 1s infinite;
 }
 </style>
