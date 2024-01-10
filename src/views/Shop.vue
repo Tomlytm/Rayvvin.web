@@ -269,7 +269,7 @@
               <input type="button" value="+" class="button-plus btn btn-sm  border-dark rounded-0 shadow" data-field="quantity" >
             </div>
                         </div>
-                        <div @click="togglePopup" class="mb-4  fs-9 cursor-pointer" style="cursor: pointer; color: #65b741;">
+                        <div @click="togglePopupp(selectedProduct.id, selectedProduct.storeId)" class="mb-4  fs-9 cursor-pointer" style="cursor: pointer; color: #65b741;">
                             Message Seller
                           </div>
                         </div>
@@ -365,6 +365,8 @@ export default {
       selectedCategory: "all",
       isPopupOpen: false,
       animateIcon: false,
+      sendMessageDisabled: false
+      
     };
   },
   methods: {
@@ -448,6 +450,7 @@ export default {
     // Update the Vuex store with the selected product's details
     this.$store.commit('setSelectedProduct', {
       id: product.id,
+      storeId: product.store_id,
       name: product.name,
       price: product.price,
       imageUrl: product.image_url,
@@ -468,6 +471,19 @@ export default {
   },
   togglePopup() {
     $('#quickViewModal').modal('hide');
+    const formData = new FormData();
+            formData.append("product_id", product_id);
+            formData.append("merchant_id", this.product.weight);
+      this.isPopupOpen = !this.isPopupOpen;
+    },
+  async togglePopupp(product_id, merchant_id) {
+    $('#quickViewModal').modal('hide');
+    console.log(product_id, merchant_id)
+    const formData = new FormData();
+            formData.append("product_id", product_id);
+            formData.append("merchant_id", merchant_id);
+            const result = await this.$store.dispatch('sendMessage', formData);
+            console.log(result)
       this.isPopupOpen = !this.isPopupOpen;
     }
   
