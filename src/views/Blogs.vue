@@ -61,12 +61,12 @@
               </div>
               <!-- list icon -->
               <!-- blog title -->
-              <div class="row g-0 mb-9">
+              <div class="row g-0 mb-9 shadow-sm">
                 <div class="col-sm-6">
                   <img
                   :src="getModifiedImageUrl(fetchBlogs.data[0].image)"
                     alt="title"
-                    class="w-100"
+                    class="w-100 h-100"
                   />
                 </div>
                 <div class="col-sm-6 border p-9 position-relative">

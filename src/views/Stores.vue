@@ -67,7 +67,7 @@
 
         <!-- col -->
         <div class="col" v-for="(store, index) in fetchStores.data" :key="index">
-           <!-- card --><div class="card p-6 card-product">
+           <!-- card --><div class="card p-6 card-product shadow-sm ">
             <!-- <div> 
                 <img src="/assets/imagesstores-logo/stores-logo-1.svg" alt=""
                 class="rounded-circle icon-shape icon-xl">
