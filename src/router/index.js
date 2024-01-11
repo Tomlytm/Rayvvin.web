@@ -9,6 +9,7 @@ import MyOrders from '../views/MyOrders.vue'
 import Settings from '../views/Settings.vue'
 import Billing from '../views/Billing.vue'
 import Dashboard from '../views/Dashboard.vue'
+import AdminDashboard from '../views/AdminDashboard.vue'
 import DashboardProducts from '../views/DashboardProducts.vue'
 import DashboardOrders from '../views/DashboardOrders.vue'
 import AddProductView from '../views/AddProductView.vue'
@@ -131,6 +132,16 @@ const router = createRouter({
       component: Dashboard,
       beforeEnter: (to, from) => {
         if (store.getters.isAuthenticated && store.getters.loggedInUser.role !== 'merchant') {
+          return from.path
+        }
+      },
+    },
+    {
+      path: '/admin-dashboard',
+      name: 'admin-dashboard',
+      component: AdminDashboard,
+      beforeEnter: (to, from) => {
+        if (store.getters.isAuthenticated && store.getters.loggedInUser.role !== 'merchant' && store.getters.loggedInUser.role !=='customer') {
           return from.path
         }
       },

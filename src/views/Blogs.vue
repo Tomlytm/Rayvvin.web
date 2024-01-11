@@ -46,11 +46,11 @@
                   >
                     <div>
                       <h2 class="mb-0 fs-1">
-                        Short heading goes
+                        Get all the latest stories
                         <span class="text-success">here!</span>
                       </h2>
                       <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        All the updates and news on Rayvvin In one place.
                       </p>
                     </div>
                     <div>
@@ -64,7 +64,7 @@
               <div class="row g-0 mb-9">
                 <div class="col-sm-6">
                   <img
-                    src="/assets/images/blog-title-image.svg"
+                  :src="getModifiedImageUrl(fetchBlogs.data[0].image)"
                     alt="title"
                     class="w-100"
                   />
@@ -75,10 +75,9 @@
                       >5 min read</span
                     >
                   </div>
-                  <div class="mb-5 h2">Blog title heading will go here</div>
+                  <div class="mb-5 h2">{{ fetchBlogs.data[0].title }}</div>
                   <div class="mb-5">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Suspendisse varius enim in eros.
+                    {{ fetchBlogs.data[0].body }}
                   </div>
                   <div
                     class="d-flex align-items-center gap-3 btn fw-normal p-0"
@@ -112,9 +111,11 @@
               <!-- <BlogCard /> -->
               <div class="row">
                 <BlogCard
-                  v-for="(path, index) in imagePaths"
+                  v-for="(path, index) in fetchBlogs.data"
                   :key="index"
-                  :imgPath="path"
+                  :imgPath="getModifiedImageUrl(path.image)"
+                  :body="path.body"
+                  :title="path.title"
                 />
               </div>
 
@@ -126,110 +127,7 @@
                   :key="index"
                 >
                   <!-- card product -->
-                  <div class="card card-product">
-                    <div class="card-body">
-                      <!-- badge -->
-                      <div class="text-center position-relative">
-                        <div class="position-absolute top-0 start-0">
-                          <span class="badge bg-danger">Sale</span>
-                        </div>
-                        <img
-                          :src="product.image_url"
-                          alt="Grocery Ecommerce Template"
-                          class="mb-3 img-fluid"
-                        />
-                        <div class="card-product-action">
-                          <a
-                            href="#!"
-                            class="btn-action"
-                            data-bs-toggle="modal"
-                            data-bs-target="#quickViewModal"
-                            ><i
-                              class="bi bi-eye"
-                              data-bs-toggle="tooltip"
-                              data-bs-html="true"
-                              title="Quick View"
-                            ></i
-                          ></a>
-                          <a
-                            href="shop-wishlist.html"
-                            class="btn-action"
-                            data-bs-toggle="tooltip"
-                            data-bs-html="true"
-                            title="Wishlist"
-                            ><i class="bi bi-heart"></i
-                          ></a>
-                          <a
-                            href="#!"
-                            class="btn-action"
-                            data-bs-toggle="tooltip"
-                            data-bs-html="true"
-                            title="Compare"
-                            ><i class="bi bi-arrow-left-right"></i
-                          ></a>
-                        </div>
-                      </div>
-                      <!-- heading -->
-                      <div class="text-small mb-1">
-                        <a href="#!" class="text-decoration-none text-muted"
-                          ><small>{{ product.category_name }}</small></a
-                        >
-                      </div>
-                      <h2 class="fs-6">
-                        <a
-                          href="shop-single.html"
-                          class="text-inherit text-decoration-none"
-                          >{{ product.name }}</a
-                        >
-                      </h2>
-                      <div>
-                        <!-- rating --><small class="text-warning">
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-fill"></i>
-                          <i class="bi bi-star-half"></i
-                        ></small>
-                        <span class="text-muted small">4.5(149)</span>
-                      </div>
-                      <!-- price -->
-                      <div
-                        class="d-flex justify-content-between align-items-center mt-3"
-                      >
-                        <div>
-                          <span class="text-dark">£{{ product.price }}</span>
-                          <span class="text-decoration-line-through text-muted"
-                            >£{{ product.price + 1500 }}</span
-                          >
-                        </div>
-                        <!-- btn -->
-                        <div>
-                          <a
-                            href="#!"
-                            @click="addProductToCart(product.id)"
-                            class="btn btn-primary btn-sm"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              class="feather feather-plus"
-                            >
-                              <line x1="12" y1="5" x2="12" y2="19"></line>
-                              <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>
-                            Add</a
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  
                 </div>
               </div>
               <!-- row -->
@@ -274,6 +172,7 @@ export default {
       storeId: this.$route.query.storeId,
       categoryId: this.$route.query.categoryId,
       searchTerm: this.getSearch,
+      firstBlogItem: null,
       imagePaths: [
         "/assets/images/blog_img1.svg",
         "/assets/images/blog_img2.svg",
@@ -328,18 +227,35 @@ export default {
 
       await this.$store.dispatch("addSingleProductToCart", productId);
     },
+    getModifiedImageUrl(originalUrl) {
+      // Remove the first slash if it exists
+      return originalUrl.startsWith('/') ? originalUrl.slice(1) : originalUrl;
+    },
   },
   computed: {
     fetchProducts() {
+      
       return this.$store.getters.products;
+    },
+    fetchBlogs() {
+      return this.$store.getters.blogs;
+      
     },
     getSearch() {
       const result = this.$route.query.search;
       return result;
     },
   },
-  async created() {},
+  async created() {
+
+    await this.$store.dispatch("getBlogs");
+const proxyObject = this.$store.getters.blogs.data[0];
+console.log(proxyObject.title);
+    this.firstBlogItem = JSON.parse(JSON.stringify(proxyObject));
+  },
   async mounted() {
+    this.$store.dispatch("getBlogs");
+    // console.log('fwfebjkejke', this.$store.dispatch("getBlogs"))
     const data = {
       pageNumber: 1,
     };

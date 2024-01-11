@@ -26,6 +26,7 @@ const store = createStore({
         merchantStore: {},
         customerOrders: [],
         storeProducts: [],
+        blogs: null,
         storeOrders: [],
         dashboardData: {},
         singleStoreOrder: {},
@@ -81,6 +82,9 @@ const store = createStore({
         },
         cart: state => {
             return state.cart;
+        },
+        blogs: state => {
+            return state.blogs;
         },
         topThreeDailyBestSellers: state => {
             return state.topThreeDailyBestSellers;
@@ -291,6 +295,9 @@ const store = createStore({
                     if (result.data.data.user.role === 'merchant') {
                         router.push({ path: '/dashboard' })
                     }
+                    if (result.data.data.user.role === 'admin') {
+                        router.push({ path: '/admin-dashboard' })
+                    }
 
 
                     return true;
@@ -499,6 +506,53 @@ const store = createStore({
             } 
             
         },
+        async getBlogs({ commit }) {
+            try {
+                // axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.getters.token;
+                const result = await axios.get('/api/v1/blog/get-blogs');
+                if(result.status ==200){
+                   console.log(result.data, 'ghvvvvvvvvvvvv') 
+                }
+                
+                commit('setBlogs', result.data);
+
+            } catch(error) {
+                console.log("sendMessage", error);
+                return false;
+
+            } 
+            
+        },
+        async ViewBlog({ commit }, id) {
+            try {
+                // axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.getters.token;
+                const result = await axios.get('/api/v1/blog/view-blog/'+ id);
+                if (result.data.success) {        
+                    return true;
+                }
+
+            } catch(error) {
+                console.log("sendMessage", error);
+                return false;
+
+            } 
+            
+        },
+        async SearchBlog({ commit }, tag, category, query) {
+            try {
+                // axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.getters.token;
+                const result = await axios.post(`/api/v1/blog/search?tag=${tag}&category=${category}&esearch=${query}/`);
+                if (result.data.success) {        
+                    return true;
+                }
+
+            } catch(error) {
+                console.log("sendMessage", error);
+                return false;
+
+            } 
+            
+        },
     },
     mutations: {
         setMerchantHasCompletedOnboardingStatus(state, data) {
@@ -578,6 +632,9 @@ const store = createStore({
         },
         setCart(state, cart) {
             state.cart = cart;
+        },
+        setBlogs(state, blogs) {
+            state.blogs = blogs;
         },
         setCategories(state, categories) {
             state.categories = categories;
