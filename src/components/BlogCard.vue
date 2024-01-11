@@ -1,21 +1,20 @@
 <template>
     
-    <div class="col-sm-4  mont pointer"  style="height: 530px; margin-bottom: 50px;">
+    <div class="col-sm-4  mont pointer"  style=" margin-bottom: 50px;">
         <div class="card border-0 " style="background: transparent;">
             <div class="card-image mb-3">
-                <img class="w-100 shadow-sm" :src="imgPath" alt="blog">
+                <img class="w-100 shadow-sm" style="height: 250px;" :src="imgPath" alt="blog">
             </div>
-            <div class="mb-3 border p-3" style="background: transparent;">
+            <div class="mb-3 border p-3" style="background: transparent; height: 400px;">
                 <div class="">
                     <div class="mb-5"><span class="bg-light p-2">Category</span>&nbsp;&nbsp;<span
                       >5 min read</span
                     ></div>
                     
                 </div>
-                <div class="mb-5 h6">Blog title heading will go here</div>
-                  <div class="mb-5 fs-6">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Suspendisse varius enim in eros.
+                <div class="mb-5 h6">{{ title }}</div>
+                  <div class="mb-5 fs-6 text-container w-100" >
+                   {{ body }}
                   </div>
                   <div @click="navigateToBlog"
                     class="d-flex align-items-center gap-3 btn fw-normal p-0"
@@ -79,7 +78,28 @@ export default {
     imgPath: {
       type: String,
       required: true // You can set this to false if the prop is not mandatory
-    }},
+    },
+    title: {
+      type: String,
+      required: true // You can set this to false if the prop is not mandatory
+    },
+    body: {
+      type: String,
+      required: true // You can set this to false if the prop is not mandatory
+    },
+  
+  },
    
 }
 </script>
+<style scoped>
+.text-container {
+  height: 230px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+}
+</style>
