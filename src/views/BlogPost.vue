@@ -59,7 +59,7 @@
         </div>
 
         <div class="mb-8">
-          <img src="/assets/images/blogpost.svg" alt="post" class="w-100" />
+          <img src="/assets/images/blog_img1.svg" alt="post" class="w-100" />
         </div>
         <div class="d-flex justify-content-between mb-7">
           <div class="d-flex gap-5">
