@@ -41,7 +41,7 @@
       
     </div>
   </div>
-  <div v-if="this.$route.name  !== 'shop'" v-show="!isPopupOpen" @click="togglePopup" class="fixed-icon " :class="{ 'bounce-animation': animateIcon }">
+  <div v-show="!isPopupOpen && authenticated" @click="togglePopup" class="fixed-icon " :class="{ 'bounce-animation': animateIcon }">
     <!-- Add an icon for messaging -->
     <div class="position-relative">
       <img id="messageIcon" src="/assets/images/msg.png" alt="Message Icon" width="40" height="40">
@@ -55,6 +55,7 @@
 
 <script>
 // Import the NavBar component
+import store from '../store'
 import NavBar from '../components/Header.vue';
 
 export default {
@@ -73,6 +74,11 @@ export default {
     $('#quickViewModal').modal('hide');
       this.isPopupOpen = !this.isPopupOpen;
     }
+  },
+  computed: {
+    authenticated () {
+        return this.$store.getters.isAuthenticated;
+      }  
   },
   created() {
     this.currentPage = this.$route.name; 
