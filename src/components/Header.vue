@@ -97,7 +97,7 @@
                 <router-link to="/shop" class="nav-link text-white mont" aria-expanded="false" style="font-size:17px;" :class="{ 'active-link': isRouteActive('/shop') }">Shop</router-link>
               </div>
               <div class="nav-item w-100 w-lg-auto mx-4">
-                <router-link :to="{name: 'stores'}" class="nav-link text-white"  aria-expanded="false" style="font-size:17px;" :class="{ 'active-link': isRouteActive('/stores') }">Stores</router-link>
+                <router-link to="/stores" class="nav-link text-white"  aria-expanded="false" style="font-size:17px;" :class="{ 'active-link': isRouteActive('/stores') }">Stores</router-link>
               </div>
               <div class="nav-item w-100 w-lg-auto mx-4">
                 <router-link to="/blog" class="nav-link text-white" aria-expanded="false" style="font-size:17px;" :class="{ 'active-link': isRouteActive('/blog') }">Blog</router-link>

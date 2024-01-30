@@ -65,7 +65,6 @@ export default {
     return {
       isPopupOpen: false,
       animateIcon: false,
-      
       currentPage: '',
     };
   },
@@ -89,7 +88,6 @@ export default {
 </script>
 
 <style>
-/* Add styles for this component */
 #messagingPopup {
       position: fixed;
       bottom: 0px;

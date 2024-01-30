@@ -3,344 +3,475 @@
     <!-- Shop Cart -->
     <Cart />
 
-    
-      <!--small nav-->
-      <div class="mt-4 mont">
-        <div class="container">
-          <!-- row -->
-          <div class="row">
-            <!-- col -->
-            <div class="col-12">
-              <!-- breadcrumb -->
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0">
-                  <li class="breadcrumb-item">
-                    <router-link to="/">Home</router-link>
-                  </li>
-                  <li class="breadcrumb-item active" aria-current="page">
-                    Shop
-                  </li>
-                </ol>
-              </nav>
-            </div>
+    <!--small nav-->
+    <div class="mt-4 mont">
+      <div class="container">
+        <!-- row -->
+        <div class="row">
+          <!-- col -->
+          <div class="col-12">
+            <!-- breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                  <router-link to="/">Home</router-link>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Shop</li>
+              </ol>
+            </nav>
           </div>
         </div>
       </div>
-      <!--small nav-->
+    </div>
+    <!--small nav-->
 
-      <!-- shop -->
-      <section class="mt-8 mb-lg-14 mb-8">
-        <div class="container">
-          <!-- row -->
-          <div class="row">
-            <!-- col -->
-            <div class="col-lg-12">
-              <!-- page header -->
-              <div class="card mb-4 bg-light border-0">
-                <!-- card body -->
-                <div class="card-body p-9">
-                  <!-- title -->
-                  <h2 class="mb-0 fs-1">
-                    All you want and need right
-                    <span class="text-success">here!</span>
-                  </h2>
-                  <div>
-                    <p class="mt-3 mb-md-0">
-                      <span class="text-dark">{{ fetchProducts.length }}</span>
-                      Products found
-                    </p>
-                  </div>
+    <!-- shop -->
+    <section class="mt-8 mb-lg-14 mb-8">
+      <div class="container">
+        <!-- row -->
+        <div class="row">
+          <!-- col -->
+          <div class="col-lg-12">
+            <!-- page header -->
+            <div class="card mb-4 bg-light border-0">
+              <!-- card body -->
+              <div class="card-body p-9">
+                <!-- title -->
+                <h2 class="mb-0 fs-1">
+                  All you want and need right
+                  <span class="text-success">here!</span>
+                </h2>
+                <div>
+                  <p class="mt-3 mb-md-0">
+                    <span class="text-dark">{{ fetchProducts.length }}</span>
+                    Products found
+                  </p>
                 </div>
-
-                <div
-                  class="d-lg-flex justify-content-between align-items-center"
-                ></div>
               </div>
-              <!-- list icon -->
 
-              <div class="d-lg-flex w-100">
-                <div class="py-5 m-0 d-none d-lg-block col-2">
-                  <div class="h5">Filters</div>
-                  <p style="font-size: 10px">
-                    Showing <span>0</span> of <span>100</span>
-                  </p>
-                  <p class="mt-3 text-black pointer" :class=" selectedCategory === 'all'?'text-green':'' " style="font-size: 12px; cursor: pointer;"  @click="onCategorySelected('all')">
-                    All Categories
-                  </p>
-                  <hr class="w-75" />
-                  <div>
-                    <p
-                      v-for="(category, index) in fetchCategories"
-                      :key="index"
-                      class="text-black pointer"
-                    >
-                      <span
-                      @click="onCategorySelected(category.name)"
-                        class="text-black pointer"
-                        :class=" selectedCategory === category.name?'text-green':'' "
-                        style="font-size: 12px; cursor: pointer;"
-                        >{{ category.name }}</span
-                      >
-                    </p>
-                  </div>
-                  <hr class="w-75" />
-                </div>
-                <div  v-if="fetchProducts.length > 0"
-                  class="row g-4 row-cols-lg-4 row-cols-2 row-cols-md-3 mt-2 w-100"
+              <div
+                class="d-lg-flex justify-content-between align-items-center"
+              ></div>
+            </div>
+            <!-- list icon -->
+
+            <div class="d-lg-flex w-100">
+              <div class="py-5 m-0 d-none d-lg-block col-2">
+                <div class="h5">Filters</div>
+                <p style="font-size: 10px">
+                  Showing <span>0</span> of <span>100</span>
+                </p>
+                <p
+                  class="mt-3 text-black pointer"
+                  :class="selectedCategory === 'all' ? 'text-green' : ''"
+                  style="font-size: 12px; cursor: pointer"
+                  @click="onCategorySelected('all')"
                 >
-                  <!-- col -->
-                  <div
-                    class="col"
-                    v-for="(product, index) in fetchProducts"
+                  All Categories
+                </p>
+                <hr class="w-75" />
+                <div>
+                  <p
+                    v-for="(category, index) in fetchCategories"
                     :key="index"
+                    class="text-black pointer"
                   >
-                    <!-- card product -->
-                    <div class="card card-product shadow-sm">
-                      <div class="card-body">
-                        <!-- badge -->
-                        <div class="text-center position-relative">
-                          <div class="position-absolute top-0 start-0">
-                            <span class="badge bg-danger">Sale</span>
-                          </div>
-                          <img
-                            style="height: 130px"
-                            :src="product.image_url"
-                            alt="Grocery Ecommerce Template"
-                            class="mb-3 img-fluid"
-                          />
-                          <div class="card-product-action">
-                            <button
-                              class="btn btn-action"
-                              @click="openQuickViewModal(product)"
-                            >
-                              <i
-                                class="bi bi-eye"
-                                data-bs-toggle="tooltip"
-                                data-bs-html="true"
-                                title="Quick View"
-                              ></i>
-                            </button>
-                            <a
-                              href="shop-wishlist.html"
-                              class="btn-action"
-                              data-bs-toggle="tooltip"
-                              data-bs-html="true"
-                              title="Wishlist"
-                              ><i class="bi bi-heart"></i
-                            ></a>
-                            <a
-                              href="#!"
-                              class="btn-action"
-                              data-bs-toggle="tooltip"
-                              data-bs-html="true"
-                              title="Compare"
-                              ><i class="bi bi-arrow-left-right"></i
-                            ></a>
-                          </div>
+                    <span
+                      @click="onCategorySelected(category.name)"
+                      class="text-black pointer"
+                      :class="
+                        selectedCategory === category.name ? 'text-green' : ''
+                      "
+                      style="font-size: 12px; cursor: pointer"
+                      >{{ category.name }}</span
+                    >
+                  </p>
+                </div>
+                <hr class="w-75" />
+              </div>
+              <div
+                v-if="fetchProducts.length > 0"
+                class="row g-4 row-cols-lg-4 row-cols-2 row-cols-md-3 mt-2 w-100"
+              >
+                <!-- col -->
+                <div
+                  class="col"
+                  v-for="(product, index) in fetchProducts"
+                  :key="index"
+                >
+                  <!-- card product -->
+                  <div class="card card-product shadow-sm">
+                    <div class="card-body">
+                      <!-- badge -->
+                      <div class="text-center position-relative">
+                        <div class="position-absolute top-0 start-0">
+                          <span class="badge bg-danger">Sale</span>
                         </div>
-                        <!-- heading -->
-                        <div class="text-small mb-1">
-                          <a href="#!" class="text-decoration-none text-muted"
-                            ><small>{{ product.category_name }}</small></a
+                        <img
+                          style="height: 130px"
+                          :src="product.image_url"
+                          alt="Grocery Ecommerce Template"
+                          class="mb-3 img-fluid"
+                        />
+                        <div class="card-product-action">
+                          <button
+                            class="btn btn-action"
+                            @click="openQuickViewModal(product)"
                           >
-                        </div>
-                        <h2 class="fs-6">
+                            <i
+                              class="bi bi-eye"
+                              data-bs-toggle="tooltip"
+                              data-bs-html="true"
+                              title="Quick View"
+                            ></i>
+                          </button>
                           <a
-                            href="shop-single.html"
-                            class="text-inherit text-decoration-none"
-                            >{{ product.name }}</a
-                          >
-                        </h2>
-                        <div>
-                          <!-- rating --><small class="text-warning">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-half"></i
-                          ></small>
-                          <span class="text-muted small">4.5(149)</span>
+                            href="shop-wishlist.html"
+                            class="btn-action"
+                            data-bs-toggle="tooltip"
+                            data-bs-html="true"
+                            title="Wishlist"
+                            ><i class="bi bi-heart"></i
+                          ></a>
+                          <a
+                            href="#!"
+                            class="btn-action"
+                            data-bs-toggle="tooltip"
+                            data-bs-html="true"
+                            title="Compare"
+                            ><i class="bi bi-arrow-left-right"></i
+                          ></a>
                         </div>
-                        <!-- price -->
-                        <div
-                          class="d-flex justify-content-between align-items-center mt-3"
+                      </div>
+                      <!-- heading -->
+                      <div class="text-small mb-1">
+                        <a href="#!" class="text-decoration-none text-muted"
+                          ><small>{{ product.category_name }}</small></a
                         >
-                          <div>
-                            <span class="text-dark">£{{ product.price }}</span>
-                            <span
-                              class="text-decoration-line-through text-muted"
-                              >£{{ product.price + 1500 }}</span
+                      </div>
+                      <h2 class="fs-6">
+                        <a
+                          href="shop-single.html"
+                          class="text-inherit text-decoration-none"
+                          >{{ product.name }}</a
+                        >
+                      </h2>
+                      <div>
+                        <!-- rating --><small class="text-warning">
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-fill"></i>
+                          <i class="bi bi-star-half"></i
+                        ></small>
+                        <span class="text-muted small">4.5(149)</span>
+                      </div>
+                      <!-- price -->
+                      <div
+                        class="d-flex justify-content-between align-items-center mt-3"
+                      >
+                        <div>
+                          <span class="text-dark">£{{ product.price }}</span>
+                          <span class="text-decoration-line-through text-muted"
+                            >£{{ product.price + 1500 }}</span
+                          >
+                        </div>
+                        <!-- btn -->
+                        <div>
+                          <a
+                            href="#!"
+                            @click="addProductToCart(product.id)"
+                            class="btn btn btn-sm"
+                            style="background-color: #f3fde8; color: #65b741"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="feather feather-plus"
                             >
-                          </div>
-                          <!-- btn -->
-                          <div>
-                            <a
-                              href="#!"
-                              @click="addProductToCart(product.id)"
-                              class="btn btn btn-sm"
-                              style="background-color: #f3fde8; color: #65b741"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                class="feather feather-plus"
-                              >
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                              </svg>
-                              Add</a
-                            >
-                          </div>
+                              <line x1="12" y1="5" x2="12" y2="19"></line>
+                              <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            Add</a
+                          >
                         </div>
                       </div>
                     </div>
                   </div>
-                 
-                </div> <div
-      v-else 
-      class="col mt-5 text-danger"
-    >
-      <p>Product not found for this category.</p>
-    </div>
-              </div>
-
-              <!-- row -->
-              <div class="row mt-8">
-                <div class="col text-dark">
-                  <!-- nav -->
-                  <Bootstrap5Pagination
-                    :data="fetchProducts"
-                    @pagination-change-page="getResults"
-                  />
                 </div>
+              </div>
+              <div v-else class="col mt-5 text-danger">
+                <p>Product not found for this category.</p>
+              </div>
+            </div>
+
+            <!-- row -->
+            <div class="row mt-8">
+              <div class="col text-dark">
+                <!-- nav -->
+                <Bootstrap5Pagination
+                  :data="fetchProducts"
+                  @pagination-change-page="getResults"
+                />
               </div>
             </div>
           </div>
         </div>
-      </section>
-
-      
+      </div>
+    </section>
 
     <!-- footer -->
     <Footer />
   </div>
   <!-- quickview modal -->
 
-  <div class="modal fade" ref="quickViewModal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg text-dark">
-        <div class="modal-content  p-4">
-          <div class="modal-header border-0">
-            <!-- <h5 class="modal-title fs-3 fw-bold" id="quickViewModalLabel">Sign In For the Best Experience</h5><br /> -->
-            <button type="button" class="btn-close" @click="closeModal" aria-label="Close"></button>
-          </div>
-          <div class="mont" style="margin-top: -20px;">
-            <div class="d-lg-flex gap-5 w-100"> 
-              <div class="w-lg-50"><img class="w-100 pointer" :src="selectedProduct.imageUrl" alt="" style="height: 320px;"></div>
-              <div class="w-lg-50 position-relative">
-                <div style="overflow-y: scroll; max-height: 270px;">
-                <div class="mb-2 text-dark fw-semibold fs-5">{{ selectedProduct.name }}</div>
-                <div class="mb-2 text-dark  fs-5">£&nbsp;{{ selectedProduct.price }}</div>
-                <div class="mb-4">
-                          <!-- rating --><small class="text-dark" style="font-size: 17px;">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-half"></i
-                          ></small>
-                        </div>
-                <div class="fs-9 fw-normal mb-3">{{ selectedProduct.description }}</div>
-                
-                        <div class="mb-4">
-                          <div class="mb-3 fs-9 ">
-                            Quantity
-                          </div>
-                          <div class="input-group input-spinner  ">
-              <input type="button" value="-" class="button-minus border-dark  rounded-0 btn  btn-sm shadow" data-field="quantity" >
-              <input type="number" step="1" max="10"  name="quantity" value="1"
-                class="quantity-field form-control-sm form-input border-dark ">
-              <input type="button" value="+" class="button-plus btn btn-sm  border-dark rounded-0 shadow" data-field="quantity" >
+  <div
+    class="modal fade"
+    ref="quickViewModal"
+    id="quickViewModal"
+    tabindex="-1"
+    aria-labelledby="quickViewModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg text-dark">
+      <div class="modal-content p-4">
+        <div class="modal-header border-0">
+          <!-- <h5 class="modal-title fs-3 fw-bold" id="quickViewModalLabel">Sign In For the Best Experience</h5><br /> -->
+          <button
+            type="button"
+            class="btn-close"
+            @click="closeModal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="mont" style="margin-top: -20px">
+          <div class="d-lg-flex gap-5 w-100">
+            <div class="w-lg-50">
+              <img
+                class="w-100 pointer"
+                :src="selectedProduct.imageUrl"
+                alt=""
+                style="height: 320px"
+              />
             </div>
-                        </div>
-                        <div @click="togglePopupp(selectedProduct.id, selectedProduct.storeId)" class="mb-4  fs-9 cursor-pointer" style="cursor: pointer; color: #65b741;">
-                            Message Seller
-                          </div>
-                        </div>
-                        <div>
-                          <button    class="btn rounded-0 bg-dark w-100 text-white fw-normal mb-2 position-absolute bottom-0 mx-auto w-75">Add to Cart</button>
-                          <!-- <button></button> -->
-                        </div>
+            <div class="w-lg-50 position-relative">
+              <div style="overflow-y: scroll; max-height: 270px">
+                <div class="mb-2 text-dark fw-semibold fs-5">
+                  {{ selectedProduct.name }}
+                </div>
+                <div class="mb-2 text-dark fs-5">
+                  £&nbsp;{{ selectedProduct.price }}
+                </div>
+                <div class="mb-4">
+                  <!-- rating --><small
+                    class="text-dark"
+                    style="font-size: 17px"
+                  >
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-half"></i
+                  ></small>
+                </div>
+                <div class="fs-9 fw-normal mb-3">
+                  {{ selectedProduct.description }}
+                </div>
+
+                <div class="mb-4">
+                  <div class="mb-3 fs-9">Quantity</div>
+                  <div class="input-group input-spinner">
+                    <input
+                      type="button"
+                      value="-"
+                      class="button-minus border-dark rounded-0 btn btn-sm shadow"
+                      data-field="quantity"
+                    />
+                    <input
+                      type="number"
+                      step="1"
+                      max="10"
+                      name="quantity"
+                      value="1"
+                      class="quantity-field form-control-sm form-input border-dark"
+                    />
+                    <input
+                      type="button"
+                      value="+"
+                      class="button-plus btn btn-sm border-dark rounded-0 shadow"
+                      data-field="quantity"
+                    />
+                  </div>
+                </div>
+                <div
+                  @click="
+                    togglePopupp(selectedProduct.id, selectedProduct.merchantId)
+                  "
+                  class="mb-4 fs-9 cursor-pointer"
+                  style="cursor: pointer; color: #65b741"
+                >
+                  <svg
+                    width="23"
+                    height="20"
+                    viewBox="0 0 43 40"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M13.6658 15.7917H21.9991M13.6658 23.0833H28.2491M23.0408 37.6667C32.8208 37.6667 40.7491 29.7384 40.7491 19.9583C40.7491 10.1783 32.8208 2.25 23.0408 2.25C13.2608 2.25 5.33247 10.1783 5.33247 19.9583C5.33247 21.9375 5.65715 23.8408 6.25616 25.6179C6.48157 26.2867 6.59428 26.6211 6.61461 26.878C6.63469 27.1317 6.61951 27.3095 6.55675 27.5561C6.49319 27.8059 6.35288 28.0656 6.07225 28.585L2.66463 34.8924C2.17856 35.7921 1.93553 36.2419 1.98992 36.5891C2.0373 36.8915 2.21528 37.1578 2.47658 37.3172C2.77659 37.5002 3.28518 37.4476 4.30235 37.3424L14.9711 36.2396C15.2942 36.2062 15.4558 36.1895 15.603 36.1951C15.7478 36.2007 15.8501 36.2143 15.9913 36.2468C16.1349 36.2799 16.3154 36.3495 16.6765 36.4886C18.6517 37.2495 20.7975 37.6667 23.0408 37.6667Z"
+                      stroke="#65b741"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>&nbsp;Message Seller
+                </div>
+              </div>
+              <div>
+                <button
+                  class="btn rounded-0 bg-dark w-100 text-white fw-normal mb-2 position-absolute bottom-0 mx-auto w-75"
+                >
+                  Add to Cart
+                </button>
+                <!-- <button></button> -->
               </div>
             </div>
-           
           </div>
-          <div class="modal-footer border-0 justify-content-center">
-            <!-- Don't have an account? 
+        </div>
+        <div  class="modal-footer border-0 justify-content-center">
+          <!-- Don't have an account? 
             <a href="#" @click="showRegisterCustomerModal">Register to buy</a>
             <span>or</span>
             <a href="#" @click="showRegisterMerchantModal">Register to sell</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    style="position: fixed; bottom: 0; right: 0; width: 300px; height: 300px"
+    class="offcanvas offcanvas-end"
+    tabindex="-1"
+    id="offcanvasRightt"
+    aria-labelledby="offcanvasRightLabel"
+  >
+    <div class="offcanvas-header border-bottom">
+      <div class="text-start">
+        <h5 id="offcanvasRightLabel" class="mb-0 fs-4">Your Cart</h5>
+      </div>
+      <button
+        type="button"
+        class="btn-close text-reset"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
 
+    <div class="offcanvas-body">jk</div>
+  </div>
+  <div id="messagingPopup" :class="{ show: isPopupOpen }">
+    <span @click="togglePopup" class="close-btn">&times;</span>
+    <div class="popup-content mont">
+      <div class="px-4 pt-3 fw-semibold">Messaging</div>
+      <hr />
+      <div
+        style="height: 35px"
+        class="mx-3 d-flex align-items-center mb-1 gap-3 px-3 shadow-sm w-75 bg-light rounded-1"
+      >
+        <i class="bi bi-search search-icon"></i>
+        <input
+          placeholder="search messages"
+          type="text"
+          class="border-0 bg-light"
+        />
+      </div>
+      <div class="px-3" style="overflow-y: scroll; height: 250px">
+        <hr />
+        <div>
+          <div
+            style="cursor: pointer"
+            class="d-flex justify-content-between px-2 border-bottom pb-3 mb-2"
+            v-for="(category, index) in 4"
+            :key="index"
+          >
+            <div class="d-flex gap-3 align-items-center">
+              <div>
+                <img
+                  src="/assets/images/avatar-12.jpg"
+                  width="40px"
+                  height="40px"
+                  alt="user"
+                  class="rounded-circle"
+                />
+              </div>
+              <div class="">
+                <div class="fw-semibold">Tootbrush</div>
+                <em class="" style="font-size: 11px"
+                  >Hello, how much would you like to sell?
+                </em>
+              </div>
+            </div>
+            <div class="fw-light" style="font-size: 10px">Dec 2, 2023</div>
           </div>
         </div>
       </div>
+      <!-- Your messaging content goes here -->
     </div>
-    <div style="position: fixed; bottom: 0; right: 0; width: 300px; height: 300px;" class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightt" aria-labelledby="offcanvasRightLabel">
-  <div class="offcanvas-header border-bottom">
-    <div class="text-start">
-      <h5 id="offcanvasRightLabel" class="mb-0 fs-4">Your Cart</h5>
-    </div>
-    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
+  <div style="background: transparent !important; " id="messagingPopup1" :class="{ show: isPopupOpen1 }" >
+    <div class="position-relative">
+      <span @click="togglePopupp" class="close-btn">&times;</span>
+    <div class="popup-content mont">
 
-  <div class="offcanvas-body">
-    jk
-  </div>
-</div>
-<div id="messagingPopup" :class="{ 'show': isPopupOpen }">
-    <span @click="togglePopup" class="close-btn">&times;</span>
-    <div class="popup-content mont ">
-      <div class="px-4 pt-3 fw-semibold">
-        Messaging
-
-        
-      </div>
-      <hr />
-       <div style="height: 35px;" class="mx-3 d-flex align-items-center mb-1 gap-3 px-3 shadow-sm w-75  bg-light rounded-1">
-          <i class="bi bi-search search-icon"></i>
-        <input placeholder="search messages" type="text" class=" border-0 bg-light">
-        
+      <div
+        class="px-4 py-3  fw-bold bg-white shadow rounded-4 mb-3"
+      >
+        <div>
+          {{ selectedProduct.storeName }}
         </div>
-      <div class="px-3"  style="overflow-y: scroll; height: 250px;">
-       
-<hr />
-<div>
-  <div style="cursor: pointer;" class="d-flex justify-content-between px-2 border-bottom pb-3 mb-2" v-for="(category, index) in 4" :key="index">
-    <div class="d-flex gap-3 align-items-center">
-      <div><img src="/assets/images/avatar-12.jpg" width="40px" height="40px" alt="user" class="rounded-circle"></div>
-    <div class="">
-      <div class="fw-semibold">Tootbrush</div>
-      <em class="" style="font-size:11px;">Hello, how much would you like to sell? </em>
+      </div>
+
+      <div class="bg-white shadow rounded-4 py-2">
+      
+      <div class="px-3 w-100" style="overflow-y: scroll; height: 300px">
+        <div class="text-center " style="font-size: 9px;">August 15</div>
+        <hr />
+        <div v-for="msg in data1" :key="msg.timestamp">
+    <div :class="messageClasses(msg)">
+      <div class="p-3 rounded-3 W-100" :class="messageClasses1(msg)" style="font-size: 12px; max-width: 50%; ">
+    {{ msg.message }}
+</div>
     </div>
+    <div style="font-size: 9px;" :class="messageClasses(msg)">
+        {{ formatDate(msg.timestamp) }}
     </div>
-    <div class="fw-light " style="font-size:10px;">
-      Dec 2, 2023
+</div>
+
+
+      </div>
+      <div class="mb-2 d-flex w-100 gap-2 " style=" font-size: 12px; width: 90%;">
+                    <input type="text" class="form-control w-100" placeholder="Write message" required>
+                    <div class=" p-3 rounded-3 pointer" style="background-color: #65b741; cursor: pointer;">
+                       <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.97422 14.9326C1.64089 15.066 1.32422 15.0366 1.02422 14.8446C0.724219 14.6526 0.574219 14.3736 0.574219 14.0076V10.2826C0.574219 10.0493 0.640885 9.84095 0.774219 9.65762C0.907552 9.47429 1.09089 9.35762 1.32422 9.30762L8.57422 7.50762L1.32422 5.70762C1.09089 5.65762 0.907552 5.54095 0.774219 5.35762C0.640885 5.17429 0.574219 4.96595 0.574219 4.73262V1.00762C0.574219 0.640953 0.724219 0.36162 1.02422 0.16962C1.32422 -0.0223801 1.64089 -0.0513805 1.97422 0.0826195L17.3742 6.58262C17.7909 6.76595 17.9992 7.07429 17.9992 7.50762C17.9992 7.94095 17.7909 8.24929 17.3742 8.43262L1.97422 14.9326Z" fill="white"/>
+</svg>
+                    </div>
+                   
+
+                  </div>
+      <!-- Your messaging content goes here -->
+    </div>
+      </div>
+    
     </div>
     
   </div>
-</div>
-      </div>
-      <!-- Your messaging content goes here -->
-      
-    </div>
-  </div>
-
 </template>
   
   
@@ -364,9 +495,23 @@ export default {
       searchTerm: this.getSearch,
       selectedCategory: "all",
       isPopupOpen: false,
+      isPopupOpen1: false,
       animateIcon: false,
-      sendMessageDisabled: false
-      
+      sendMessageDisabled: false,
+      data1: [
+  { user: 'user1', message: 'Hi there!', timestamp: '2024-01-29T12:30:00' },
+  { user: 'user2', message: 'Hello!', timestamp: '2024-01-29T12:31:00' },
+  { user: 'user1', message: 'How are you?', timestamp: '2024-01-29T12:32:00' },
+  { user: 'user2', message: 'I am good, thanks!', timestamp: '2024-01-29T12:33:00' },
+  { user: 'user2', message: 'I am good, thanks!', timestamp: '2024-01-29T12:33:00' },
+  { user: 'user2', message: 'I am good, thanks!', timestamp: '2024-01-29T12:33:00' },
+  { user: 'user2', message: 'I am good, thanks!', timestamp: '2024-01-29T12:33:00' },
+  { user: 'user1', message: 'I am good, thanks!', timestamp: '2024-01-29T12:33:00' },
+  { user: 'user1', message: 'I am good, thanksddd jhjh jhbjhjk gyigjkhjhjl okjhknk hknjkhk ukhjkh jkhjkjk jghkhk kjj!', timestamp: '2024-01-29T12:33:00' },
+  { user: 'user2', message: 'I am good, thanks!', timestamp: '2024-01-29T12:33:00' },
+  { user: 'user2', message: 'I am good, thanks!', timestamp: '2024-01-29T12:33:00' },
+  { user: 'user2', message: 'I am good, thanks!', timestamp: '2024-01-29T12:33:00' },
+]
     };
   },
   methods: {
@@ -446,47 +591,92 @@ export default {
     },
     async openQuickViewModal(product) {
       // console.log(product.id)
-      
-    // Update the Vuex store with the selected product's details
-    this.$store.commit('setSelectedProduct', {
-      id: product.id,
-      storeId: product.store_id,
-      name: product.name,
-      price: product.price,
-      imageUrl: product.image_url,
-      description: product.description,
-      // other details you want to store
-    });
 
-    // Open the modal here
-    // console.log('clicked')
-    $('#quickViewModal').modal('show');
-  },
-  closeModal() {
-    // Clear the selected product in the Vuex store
-    this.$store.commit('clearSelectedProduct');
+      // Update the Vuex store with the selected product's details
+      this.$store.commit("setSelectedProduct", {
+        id: product.id,
+        storeId: product.store_id,
+        merchantId: product.merchant_id,
+        storeName: product.store_name,
+        name: product.name,
+        price: product.price,
+        imageUrl: product.image_url,
+        description: product.description,
+        // other details you want to store
+      });
 
-    // Close the modal
-    $('#quickViewModal').modal('hide');
-  },
-  togglePopup() {
-    $('#quickViewModal').modal('hide');
-    const formData = new FormData();
-            formData.append("product_id", product_id);
-            formData.append("merchant_id", this.product.weight);
+      // Open the modal here
+      // console.log('clicked')
+      $("#quickViewModal").modal("show");
+    },
+    closeModal() {
+      // Clear the selected product in the Vuex store
+      this.$store.commit("clearSelectedProduct");
+
+      // Close the modal
+      $("#quickViewModal").modal("hide");
+    },
+    togglePopup() {
+      $("#quickViewModal").modal("hide");
+      const formData = new FormData();
+      formData.append("product_id", product_id);
+      formData.append("merchant_id", this.product.weight);
       this.isPopupOpen = !this.isPopupOpen;
     },
-  async togglePopupp(product_id, merchant_id) {
-    $('#quickViewModal').modal('hide');
-    console.log(product_id, merchant_id)
-    const formData = new FormData();
-            formData.append("product_id", product_id);
-            formData.append("merchant_id", merchant_id);
-            const result = await this.$store.dispatch('sendMessage', formData);
-            console.log(result)
-      this.isPopupOpen = !this.isPopupOpen;
-    }
-  
+    async togglePopupp(product_id, merchant_id) {
+      if(this.isPopupOpen1){
+        // $("#quickViewModal").modal("hide");
+        this.isPopupOpen1 = !this.isPopupOpen1;
+      }else {
+
+      
+      try {
+        // Dispatch the startConversation action from the store
+        const success = await this.$store.dispatch("startConversation", {
+          product_id,
+          merchant_id,
+        });
+        // console.log(success)
+        if (success) {
+          console.log("Conversation started successfully");
+
+          $("#quickViewModal").modal("hide");
+          this.isPopupOpen1 = !this.isPopupOpen1;
+        } else {
+          // Handle failure (if needed)
+          console.log("Failed to start conversation");
+        }
+      } catch (error) {
+        // Handle errors from the startConversation action
+        console.error("Error starting conversation:", error);
+
+        // You can display an error message or take appropriate actions
+      }
+      }
+    },
+    formatDate(timestamp) {
+      let date = new Date(timestamp);
+
+    // Set the time to 10:00 PM
+    date.setHours(22, 0, 0, 0);
+
+    // Format the result as a string
+    let formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    return formattedTime;
+    },
+    messageClasses(msg) {
+      return {
+        'd-flex justify-content-start ': msg.user === 'user1',
+        'd-flex justify-content-end': msg.user === 'user2',
+      };
+    },
+    messageClasses1(msg) {
+      return {
+        'bg-light ': msg.user === 'user1',
+        'bg-greenn': msg.user === 'user2',
+      };
+    },
   },
   computed: {
     fetchProducts() {
@@ -501,8 +691,8 @@ export default {
       return store.getters.categories;
     },
     selectedProduct() {
-    return this.$store.state.selectedProduct; // Assuming the state in your store is named 'selectedProduct'
-  },
+      return this.$store.state.selectedProduct; // Assuming the state in your store is named 'selectedProduct'
+    },
   },
   created() {
     setInterval(() => {
@@ -547,42 +737,61 @@ export default {
   color: green !important; /* Define your desired green color */
 }
 #messagingPopup {
-      position: fixed;
-      bottom: 0px;
-      right: 10px;
-      width: 400px;
-      height: 400px;
-      background-color: #fff;
-      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
-      border-radius: 5px;
-      display: none;
-    }
+  position: fixed;
+  bottom: 0px;
+  right: 10px;
+  width: 400px;
+  height: 400px;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  display: none;
+}
+#messagingPopup1 {
+  position: fixed;
+  bottom: 15px;
+  right: 0px;
+  z-index: 10000000;
+  width: 500px;
+  height: 400px;
+  background-color: #fff;
+  /* box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2); */
+  border-radius: 5px;
+  display: none;
+}
 
-    #messagingPopup.show {
-      display: block;
-    }
+#messagingPopup.show {
+  display: block;
+}
+#messagingPopup1.show {
+  display: block;
+}
 
-    /* Styles for the close button */
-    .close-btn {
-      position: absolute;
-      top: 5px;
-      right: 10px;
-      cursor: pointer;
-      font-size: 20px;
-      color: #999;
-    }
-    .fixed-icon {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      cursor: pointer;
-      z-index: 1001;
-    }
-    #messageIcon {
-      filter: hue-rotate(220deg)
+/* Styles for the close button */
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #999;
+}
+.fixed-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+  z-index: 1001;
+}
+#messageIcon {
+  filter: hue-rotate(220deg);
 }
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateY(0);
   }
   40% {
