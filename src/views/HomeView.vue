@@ -22,7 +22,7 @@
               <router-link :to="{name: 'shop'}" class="btn py-5 px-lg-12  mt-3 text-white border " style="background: transparent;">Explore Store <i class="feather-icon icon-arrow-right ms-1"></i></router-link>
           </div>
           <div class=" d-none d-lg-block">
-            <img src="/assets/images/images/hero-img1.svg" height="420" alt="jhkk">
+            <img src="/assets/images/hero-img1.svg" height="420" alt="jhkk">
           </div>
         </div>
         <div class=" d-lg-flex align-items-center justify-content-between ">
@@ -37,7 +37,7 @@
             <router-link :to="{name: 'shop'}" class="btn py-5 px-lg-12  mt-3 text-white border " style="background: transparent;">Explore Store <i class="feather-icon icon-arrow-right ms-1"></i></router-link>
           </div>
           <div class=" d-none d-lg-block">
-            <img src="/assets/images/images/hero-img2.svg" height="420" alt="jhkk">
+            <img src="/assets/images/hero-img2.svg" height="420" alt="jhkk">
           </div>
 
         </div>
@@ -53,7 +53,7 @@
             <router-link :to="{name: 'shop'}" class="btn py-5 px-lg-12  mt-3 text-white border " style="background: transparent;">Explore Store <i class="feather-icon icon-arrow-right ms-1"></i></router-link>
           </div>
           <div class=" d-none d-lg-block">
-            <img src="/assets/images/images/hero-img3.svg" height="420" alt="jhkk">
+            <img src="/assets/images/hero-img3.svg" height="420" alt="jhkk">
           </div>
 
 
