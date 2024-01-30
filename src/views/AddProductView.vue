@@ -51,7 +51,7 @@
                   <div class="mb-3 col-lg-6">
                     <label class="form-label">Product Category</label>
                     <select name="category" v-model="product.category_id" class="form-select" id="category">
-                        <option v-for="(i, value) in getCategories" :value="i.id" selected :key="i">{{ i.name }}</option>
+                        <option v-for="(i) in getCategories" :value="i.id" selected :key="i">{{ i.name }}</option>
                     </select>
                   </div>
                   <div class="mb-3 col-lg-6">

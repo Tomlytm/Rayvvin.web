@@ -74,10 +74,14 @@
             </div> -->
             <div class="mt-4">
                <h2 class="mb-1 h5">
-                    <router-link :to="{name: 'shop', query: {'storeId': store.id}}" class="text-inherit " style="font-size: 14px;">{{ store.name }}
-                        <span class="badge " :class="{'bg-success': store.status === 'active'? true : false}, 
-                        {'bg-danger': store.status === 'inactive' ? true : false}"  style="font-size: 12px;">{{ store.status }}</span>
+                <div>
+                  <router-link :to="{name: 'shop', query: {'storeId': store.id}}" class="text-inherit " style="font-size: 14px;">{{ store.name }}
+                        
                     </router-link>
+                </div>
+                    
+                    <div class="badge " :class="{'bg-success': store.status === 'active'? true : false}, 
+                        {'bg-danger': store.status === 'inactive' ? true : false}"  style="font-size: 12px;">{{ store.status }}</div>
                 </h2>
                 <!-- <div class="small text-muted"><span class="me-2">Organic </span><span class="me-2">Groceries</span>
                   <span>Butcher Shop</span>

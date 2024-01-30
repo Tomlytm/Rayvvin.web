@@ -13,6 +13,7 @@ const store = createStore({
         loggedInUser: {},
         token: '',
         categories: [],
+        categoriesproduct: [],
         topTenPopularProducts: [],
         topThreeDailyBestSellers: [],
         cart: [],
@@ -33,6 +34,8 @@ const store = createStore({
         selectedProduct: {
             id: null,
             storeId: null,
+            merchantId: null,
+            storeName: null,
             name: '',
             price: null,
             imageUrl: '',
@@ -224,8 +227,18 @@ const store = createStore({
         async fetchCategories({ commit }) {
             try {
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.getters.token;
-                const result = await axios.get('/api/v1/category');
+                const result = await axios.get('/api/v1/get-categories');
                 commit('setCategories', result.data.data);
+                 
+            } catch (error) {
+                console.log("fetchCategories", error);
+            }
+        },
+        async fetchCategoriesProduct({ commit }) {
+            try {
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.getters.token;
+                const result = await axios.get('/api/v1/get-category-with-products');
+                commit('setCategoriesProduct', result.data.data);
                  
             } catch (error) {
                 console.log("fetchCategories", error);
@@ -255,6 +268,7 @@ const store = createStore({
                 return false;
             }
         },
+        
         async reduceOrRemoveCartProductItem({commit}, productId) {
             try {
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.getters.token;
@@ -553,6 +567,21 @@ const store = createStore({
             } 
             
         },
+        async startConversation({ commit }, data) {
+            try {
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.getters.token;
+                const result = await axios.post('/api/v1/chat/conversation', data);
+                if (result.data) {
+
+                    return true;
+                }
+                return false;
+            } catch (error) {
+                console.log("startConversation", error);
+                return false;
+            }
+        },
+
     },
     mutations: {
         setMerchantHasCompletedOnboardingStatus(state, data) {
@@ -639,6 +668,9 @@ const store = createStore({
         setCategories(state, categories) {
             state.categories = categories;
         },
+        setCategoriesProduct(state, categories) {
+            state.categoriesproduct = categories;
+        },
         logoutUser(state) {
             state.token = '';
             state.user = {};
@@ -650,6 +682,8 @@ const store = createStore({
             state.selectedProduct = {
               id: null,
               storeId: null,
+              merchantId: null,
+              storeName: null,
               name: '',
               price: null,
               imageUrl: '',

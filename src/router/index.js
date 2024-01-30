@@ -27,7 +27,7 @@ const router = createRouter({
      
       component: PublicLayout,
       children: [
-        {path: '', component: HomeView}
+        {path: '/', component: HomeView}
       ],
       beforeEnter: (to, from, next) => {
         if (store.getters.isAuthenticated && store.getters.loggedInUser.role === 'merchant') {
@@ -42,7 +42,7 @@ const router = createRouter({
       name: 'shop',
       component: PublicLayout,
       children: [
-        {path: '', component: Shop}
+        {path: '/shop', component: Shop}
       ],
       beforeEnter: (to, from) => {
         if (store.getters.isAuthenticated && store.getters.loggedInUser.role === 'merchant') {
@@ -65,7 +65,7 @@ const router = createRouter({
       name: 'stores',
       component: PublicLayout,
       children: [
-        {path: '', component: Stores}
+        {path: '/stores', component: Stores}
       ],
       beforeEnter: (to, from) => {
         if (store.getters.isAuthenticated && store.getters.loggedInUser.role === 'merchant') {
@@ -78,7 +78,7 @@ const router = createRouter({
       name: 'blog',
       component: PublicLayout,
       children: [
-        {path: '', component: Blogs}
+        {path: '/blog', component: Blogs}
       ],
       beforeEnter: (to, from) => {
         if (store.getters.isAuthenticated && store.getters.loggedInUser.role === 'merchant') {
