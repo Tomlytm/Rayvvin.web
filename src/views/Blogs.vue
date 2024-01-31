@@ -147,7 +147,7 @@
     </main>
 
     <!-- footer -->
-    <Footer />
+    <!-- <Footer /> -->
   </body>
 </template>
   
