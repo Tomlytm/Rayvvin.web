@@ -47,16 +47,18 @@
                         <!-- heading -->
                         <div class="text-small mb-1">
                           <a href="#!" class="text-decoration-none text-muted"
-                            ><small>food</small></a
+                            ><small>{{ category }}</small></a
                           >
                         </div>
                         <h2 class="fs-6">
                           <a
                             href="shop-single.html"
                             class="text-inherit text-decoration-none"
-                            >Product Name</a
+                            >{{ product_name }}</a
                           >
+                          
                         </h2>
+                        <small style="color: #B76E79">{{maxprice > price ? 'Negotiable' : ''}}</small>
                         <div>
                           <!-- rating --><small class="text-warning">
                             <i class="bi bi-star-fill"></i>
@@ -72,10 +74,10 @@
                           class="d-flex justify-content-between align-items-center mt-3"
                         >
                           <div>
-                            <span class="text-dark">£55</span>
+                            <span class="text-dark">£{{ price }}</span>
                             <span
                               class="text-decoration-line-through text-muted"
-                              >£{{ 55 + 1500 }}</span
+                              >£{{ price + 1500 }}</span
                             >
                           </div>
                           <!-- btn -->
@@ -131,7 +133,25 @@ export default {
     imgPath: {
       type: String,
       required: true // You can set this to false if the prop is not mandatory
-    }},
+    },
+  
+product_name: {
+      type: String,
+      required: true // You can set this to false if the prop is not mandatory
+    }, 
+    price: {
+      type: Number,
+      required: true // You can set this to false if the prop is not mandatory
+    },  
+    category: {
+      type: String,
+      required: true // You can set this to false if the prop is not mandatory
+    }  ,
+    maxprice: {
+      type: Number,
+      required: true // You can set this to false if the prop is not mandatory
+    }  
+  },
     
    computed: {
      fetchCategories() {

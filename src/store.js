@@ -20,6 +20,7 @@ const store = createStore({
         cart: [],
         wishList: [],
         products: [],
+        recentproducts: [],
         merchantStripeOnboarding: {
             stripeOnboardingLink: '',
             completedProcess: false
@@ -64,6 +65,9 @@ const store = createStore({
         },
         products: state => {
             return state.products;
+        },
+        recentproducts: state => {
+            return state.recentproducts;
         },
         wishList: state => {
             return state.wishList;
@@ -178,6 +182,16 @@ const store = createStore({
                 commit('setProducts', result.data.data);
             } catch (error) {
                 console.log("fetchProducts", error);
+            }
+        },
+        async fetchRecentProducts({ commit }, data) {
+            try {
+                var url = '/api/v1/products-paginated?page=3';
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.getters.token;
+                const result = await axios.get(url);
+                commit('setRecentProducts', result.data.data);
+            } catch (error) {
+                console.log("fetchRecentProducts", error);
             }
         },
         async addProductToWishList({ commit }, productId) {
@@ -642,6 +656,9 @@ const store = createStore({
         },
         setProducts(state, products) {
             state.products = products;
+        },
+        setRecentProducts(state, products) {
+            state.recentproducts = products;
         },
         setUserWishList(state, wishList) {
             state.wishList = wishList;
