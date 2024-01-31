@@ -3,8 +3,8 @@ import createPersistedState from 'vuex-persistedstate'
 import axios from 'axios'
 import router from './router';
 
-axios.defaults.baseURL = import.meta.env.VITE_APP_SERVER_BASE_URL;
-// axios.defaults.baseURL = 'https://ec2-13-60-29-67.eu-north-1.compute.amazonaws.com';
+// axios.defaults.baseURL = import.meta.env.VITE_APP_SERVER_BASE_URL;
+axios.defaults.baseURL = 'http://ec2-13-60-29-67.eu-north-1.compute.amazonaws.com';
 
 const store = createStore({
     plugins: [createPersistedState({
