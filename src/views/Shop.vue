@@ -59,6 +59,8 @@
               <div class="py-5 m-0 d-none d-lg-block col-2">
                 <div class="h5">Filters</div>
                 <p style="font-size: 10px">
+                  <!-- {{ conversationId }} -->
+                  <!-- {{ msgText }} -->
                   Showing <span>0</span> of <span>100</span>
                 </p>
                 <p
@@ -207,28 +209,31 @@
                   </div>
                 </div>
               </div>
+              
               <div v-else class="col mt-5 text-danger">
                 <p>Product not found for this category.</p>
               </div>
+             
             </div>
-
-            <!-- row -->
-            <div class="row mt-8">
-              <div class="col text-dark">
-                <!-- nav -->
-                <Bootstrap5Pagination
-                  :data="fetchProducts"
-                  @pagination-change-page="getResults"
-                />
+            
+            <div class="row mb-5 mt-8">
+              <div class="col-lg-2"></div>
+                <div class="col-lg-10">
+                  <!-- nav -->
+                  <Bootstrap5Pagination :data="fetchProductss" @pagination-change-page="getResults" />
+                </div>
               </div>
-            </div>
+           
+            <!-- row -->
+           
           </div>
+          
         </div>
       </div>
     </section>
-
+    
     <!-- footer -->
-    <Footer />
+    <!-- <FooterComp /> -->
   </div>
   <!-- quickview modal -->
 
@@ -456,8 +461,8 @@
 
       </div>
       <div class="mb-2 d-flex w-100 gap-2 " style=" font-size: 12px; width: 90%;">
-                    <input type="text" class="form-control w-100" placeholder="Write message" required>
-                    <div class=" p-3 rounded-3 pointer" style="background-color: #65b741; cursor: pointer;">
+                    <input type="text" class="form-control w-100" v-model="msgText" placeholder="Write message" required>
+                    <div class=" p-3 rounded-3 pointer" style="background-color: #65b741; cursor: pointer;" @click="sendMessage(msgText, conversationId)">
                        <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M1.97422 14.9326C1.64089 15.066 1.32422 15.0366 1.02422 14.8446C0.724219 14.6526 0.574219 14.3736 0.574219 14.0076V10.2826C0.574219 10.0493 0.640885 9.84095 0.774219 9.65762C0.907552 9.47429 1.09089 9.35762 1.32422 9.30762L8.57422 7.50762L1.32422 5.70762C1.09089 5.65762 0.907552 5.54095 0.774219 5.35762C0.640885 5.17429 0.574219 4.96595 0.574219 4.73262V1.00762C0.574219 0.640953 0.724219 0.36162 1.02422 0.16962C1.32422 -0.0223801 1.64089 -0.0513805 1.97422 0.0826195L17.3742 6.58262C17.7909 6.76595 17.9992 7.07429 17.9992 7.50762C17.9992 7.94095 17.7909 8.24929 17.3742 8.43262L1.97422 14.9326Z" fill="white"/>
 </svg>
@@ -478,13 +483,15 @@
   <script>
 //   import store from '../store'
 import Cart from "../components/Cart.vue";
-import Footer from "../components/Footer.vue";
+// import FooterComp from "../components/Footer.vue";
 import { Bootstrap5Pagination } from "laravel-vue-pagination";
 import store from "../store";
 
 export default {
   components: {
     Cart, // Register the NavBar component
+    // FooterComp,
+    Bootstrap5Pagination
   },
   name: "Shop",
   data() {
@@ -497,6 +504,8 @@ export default {
       isPopupOpen: false,
       isPopupOpen1: false,
       animateIcon: false,
+      conversationId: null,
+      msgText: "",
       sendMessageDisabled: false,
       data1: [
   { user: 'user1', message: 'Hi there!', timestamp: '2024-01-29T12:30:00' },
@@ -636,10 +645,11 @@ export default {
           product_id,
           merchant_id,
         });
-        // console.log(success)
+        
         if (success) {
           console.log("Conversation started successfully");
-
+console.log(success)
+this.conversationId = success.conversation_id
           $("#quickViewModal").modal("hide");
           this.isPopupOpen1 = !this.isPopupOpen1;
         } else {
@@ -677,8 +687,36 @@ export default {
         'bg-greenn': msg.user === 'user2',
       };
     },
+    async sendMessage(msg, conversation_id) {
+      const messageData ={
+        message: msg, 
+        conversation_id
+      }
+      try {
+        // Call the sendMessage action from the store
+        const result = await this.$store.dispatch('sendMessage', messageData);
+        if (result) { 
+          this.msgText = ""
+          return this.$toast.open({
+            message: "Message sent!",
+            type: "success"
+          })
+         
+        } else {
+          console.error('Failed to send message');
+          // Handle failure
+        }
+      } catch (error) {
+        console.error('Error sending message:', error);
+        // Handle error
+      }
+    },
   },
   computed: {
+    fetchProductss() {
+      
+      return this.$store.getters.products;
+    },
     fetchProducts() {
       // Return filtered products based on the selected category
       return this.filterProductsByCategory(this.selectedCategory);

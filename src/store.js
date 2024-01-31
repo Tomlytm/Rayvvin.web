@@ -509,8 +509,9 @@ const store = createStore({
         },
         async sendMessage({ commit }, data) {
             try {
-                const result = await axios.post('/api/v1/chat/conversation', data);
-                if (result.data.success) {        
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.getters.token;
+                const result = await axios.post('/api/v1/chat/message', data);
+                if (result.data) {
                     return true;
                 }
 
@@ -574,7 +575,7 @@ const store = createStore({
                 const result = await axios.post('/api/v1/chat/conversation', data);
                 if (result.data) {
 
-                    return true;
+                    return result.data;
                 }
                 return false;
             } catch (error) {

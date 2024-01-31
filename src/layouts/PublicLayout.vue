@@ -1,7 +1,11 @@
 <template>
   <div>
     <NavBar />
+    <div class="h-100">
+      
     <router-view />
+    </div>
+    <FooterComp />
 
   </div>
   <div id="messagingPopup" :class="{ 'show': isPopupOpen }">
@@ -57,10 +61,12 @@
 // Import the NavBar component
 import store from '../store'
 import NavBar from '../components/Header.vue';
+import FooterComp from "../components/Footer.vue";
 
 export default {
   components: {
     NavBar, // Register the NavBar component
+    FooterComp,
   },
   data(){
     return {
