@@ -158,6 +158,7 @@
                           >{{ product.name }}</a
                         >
                       </h2>
+                      <small style="color: #B76E79">{{product.max_price > product.price ? 'Negotiable' : ''}}</small>
                       <div>
                         <!-- rating --><small class="text-warning">
                           <i class="bi bi-star-fill"></i>
