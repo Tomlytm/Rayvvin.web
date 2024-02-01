@@ -26,6 +26,8 @@ const store = createStore({
             completedProcess: false
         },
         store: [],
+        conversations: [],
+        conversation: [],
         merchantStore: {},
         customerOrders: [],
         storeProducts: [],
@@ -65,6 +67,12 @@ const store = createStore({
         },
         products: state => {
             return state.products;
+        },
+        conversations: state => {
+            return state.conversations;
+        },
+        conversation: state => {
+            return state.conversation;
         },
         recentproducts: state => {
             return state.recentproducts;
@@ -555,7 +563,7 @@ const store = createStore({
         },
         async ViewBlog({ commit }, id) {
             try {
-                // axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.getters.token;
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.getters.token;
                 const result = await axios.get('/api/v1/blog/view-blog/'+ id);
                 if (result.data.success) {        
                     return true;
@@ -596,6 +604,41 @@ const store = createStore({
                 console.log("startConversation", error);
                 return false;
             }
+        },
+        async getAllConversations({ commit }) {
+            try {
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.getters.token;
+                const result = await axios.get('/api/v1/chat/conversation');
+                if(result.status ==200){
+                   console.log(result.data) 
+                }
+                console.log(result.data.data) 
+                commit('setConversations', result.data.data);
+
+            } catch(error) {
+                console.log("sendMessage", error);
+                return false;
+
+            } 
+            
+        },
+        async getConversation({ commit }, id) {
+            try {
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.getters.token;
+                const result = await axios.get('/api/v1/chat/conversation/show/'+ id);
+                if(result.status ==200){
+                   console.log(result.data[0])
+                   console.log(result)
+                }
+                console.log(result.data.data) 
+                commit('setConversation', result.data[0]);
+
+            } catch(error) {
+                console.log("sendMessage", error);
+                return false;
+
+            } 
+            
         },
 
     },
@@ -683,6 +726,12 @@ const store = createStore({
         },
         setBlogs(state, blogs) {
             state.blogs = blogs;
+        },
+        setConversations(state, convo) {
+            state.conversations = convo;
+        },
+        setConversation(state, convo) {
+            state.conversation = convo;
         },
         setCategories(state, categories) {
             state.categories = categories;
