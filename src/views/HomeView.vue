@@ -334,7 +334,6 @@
 
 
 <!-- footer -->
-<Footer />
 </div>
 </body>
 </template>
