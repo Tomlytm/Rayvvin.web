@@ -448,14 +448,14 @@
       <div class="px-3 w-100" style="overflow-y: scroll; height: 300px">
         <div class="text-center " style="font-size: 9px;">August 15</div>
         <hr />
-        <div v-for="msg in data1" :key="msg.timestamp">
+        <div v-for="msg in fetchConversation.messages" :key="msg.timestamp">
     <div :class="messageClasses(msg)">
       <div class="p-3 rounded-3 W-100" :class="messageClasses1(msg)" style="font-size: 12px; max-width: 50%; ">
     {{ msg.message }}
 </div>
     </div>
     <div style="font-size: 9px;" :class="messageClasses(msg)">
-        {{ formatDate(msg.timestamp) }}
+      {{ formatDate(msg.updated_at) }}
     </div>
 </div>
 
@@ -651,6 +651,7 @@ export default {
           console.log("Conversation started successfully");
 console.log(success)
 this.conversationId = success.conversation_id
+this.$store.dispatch('getConversation',success.conversation_id);
           $("#quickViewModal").modal("hide");
           this.isPopupOpen1 = !this.isPopupOpen1;
         } else {
@@ -666,26 +667,43 @@ this.conversationId = success.conversation_id
       }
     },
     formatDate(timestamp) {
-      let date = new Date(timestamp);
+      const inputDate = new Date(timestamp);
 
-    // Set the time to 10:00 PM
-    date.setHours(22, 0, 0, 0);
+  // Get the current date and time
+  const currentDate = new Date();
 
-    // Format the result as a string
-    let formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  // Calculate the time difference in milliseconds
+  const timeDifference = currentDate - inputDate;
 
+  // Calculate the number of days
+  const daysAgo = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
+
+  // Format the time to 10:00 PM
+  const formattedTime = inputDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+  if (daysAgo === 0) {
+    // If within the same day, return the formatted time
     return formattedTime;
+  } else if (daysAgo === 1) {
+    // If it was yesterday, return 'Yesterday at [formatted time]'
+    return `Yesterday at ${formattedTime}`;
+  } else {
+    // If it was more than one day ago, return '[daysAgo] days ago'
+    return `${daysAgo} days ago`;
+  }
     },
     messageClasses(msg) {
+      const id = this.$store.getters.loggedInUser.id;
       return {
-        'd-flex justify-content-start ': msg.user === 'user1',
-        'd-flex justify-content-end': msg.user === 'user2',
+        'd-flex justify-content-start ': msg.user_id !== id ,
+        'd-flex justify-content-end': msg.user_id === id,
       };
     },
     messageClasses1(msg) {
+      const id = this.$store.getters.loggedInUser.id;
       return {
-        'bg-light ': msg.user === 'user1',
-        'bg-greenn': msg.user === 'user2',
+        'bg-light ': msg.user_id !== id,
+        'bg-greenn': msg.user_id === id,
       };
     },
     async sendMessage(msg, conversation_id) {
@@ -698,6 +716,7 @@ this.conversationId = success.conversation_id
         const result = await this.$store.dispatch('sendMessage', messageData);
         if (result) { 
           this.msgText = ""
+          this.$store.dispatch('getConversation', conversation_id);
           return this.$toast.open({
             message: "Message sent!",
             type: "success"
@@ -731,6 +750,14 @@ this.conversationId = success.conversation_id
     },
     selectedProduct() {
       return this.$store.state.selectedProduct; // Assuming the state in your store is named 'selectedProduct'
+    },
+    fetchConversation() {
+        if(this.conversationId !== null){
+          
+      return this.$store.getters.conversation;
+        }else {
+          return []
+        }
     },
   },
   created() {

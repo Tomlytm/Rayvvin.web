@@ -79,7 +79,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(product, index) in fetchStoreProducts" :key="index">
+                        <tr v-for="(product, index) in fetchStoreProducts" :key="index" >
                         <td>
                           <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="productOne">

@@ -630,7 +630,7 @@ const store = createStore({
                    console.log(result.data[0])
                    console.log(result)
                 }
-                console.log(result.data.data) 
+                // console.log(result.data.data) 
                 commit('setConversation', result.data[0]);
 
             } catch(error) {
