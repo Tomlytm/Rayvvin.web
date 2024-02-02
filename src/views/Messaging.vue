@@ -60,7 +60,7 @@
                         class="border-0 bg-light"
                       />
                     </div>
-                    <div class="px-3" style="overflow-y: scroll; height: 350px">
+                    <div class="px-3" style="overflow-y: scroll; height: 250px">
                       <hr />
                       <div>
                         <div
@@ -121,7 +121,7 @@
                         <div
                           ref="chatContainer"
                           class="px-3 w-100"
-                          style="overflow-y: scroll; height: 350px"
+                          style="overflow-y: scroll; height: 250px"
                         >
                           <div class="text-center" style="font-size: 9px">
                             August 15
