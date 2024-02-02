@@ -29,7 +29,7 @@
   <div style="cursor: pointer;" class="d-flex justify-content-between px-2 border-bottom pb-3 mb-2" v-for="(convo, index) in fetchConversations" :key="index">
     <div class="d-flex gap-3 align-items-center">
       <div><img src="/assets/images/avatar-12.jpg" width="40px" height="40px" alt="user" class="rounded-circle"></div>
-    <div class="" @click="togglePopupp(convo.id, convo.store_name)">
+    <div class="" @click="togglePopuppp(convo.id, convo.store_name)">
       <div class="fw-semibold">{{ convo.store_name }}</div>
       <em class="" style="font-size:11px;">{{ convo.product_name }} </em>
     </div>
@@ -47,7 +47,7 @@
   </div>
   <div style="background: transparent !important; " id="messagingPopup1" :class="{ show: isPopupOpen1 }" >
     <div class="position-relative">
-      <span @click="togglePopupp" class="close-btn">&times;</span>
+      <span @click="togglePopuppp" class="close-btn">&times;</span>
     <div class="popup-content mont">
 
       <div
@@ -63,14 +63,14 @@
       <div class="px-3 w-100" style="overflow-y: scroll; height: 300px">
         <div class="text-center " style="font-size: 9px;">August 15 </div>
         <hr />
-        <div v-for="msg in fetchConversation.messages" :key="msg.timestamp">
+        <div class="mb-3" v-for="msg in fetchConversation.messages" :key="msg.timestamp">
     <div :class="messageClasses(msg)">
       <div class="p-3 rounded-3 W-100" :class="messageClasses1(msg)" style="font-size: 12px; max-width: 50%; ">
     {{ msg.message }}
 </div>
     </div>
     <div style="font-size: 9px;" :class="messageClasses(msg)">
-        <!-- {{ formatDate(msg.timestamp) }} -->
+        {{ formatDate(msg.updated_at) }}
     </div>
 </div>
 
@@ -137,7 +137,7 @@ export default {
     }
       this.isPopupOpen = !this.isPopupOpen;
     },
-    async togglePopupp(id, name) {
+    async togglePopuppp(id, name) {
         // $("#quickViewModal").modal("hide");
         this.isPopupOpen1 = !this.isPopupOpen1;
         this.conversationId =id;
@@ -171,8 +171,8 @@ export default {
     messageClasses(msg) {
       const id = this.$store.getters.loggedInUser.id;
       return {
-        'd-flex justify-content-start ': msg.user_id === id ,
-        'd-flex justify-content-end': msg.user_id !== id,
+        'd-flex justify-content-start ': msg.user_id !== id ,
+        'd-flex justify-content-end': msg.user_id === id,
       };
     },
     messageClasses1(msg) {
@@ -181,6 +181,32 @@ export default {
         'bg-light ': msg.user_id !== id,
         'bg-greenn': msg.user_id === id,
       };
+    },
+    formatDate(timestamp) {
+      const inputDate = new Date(timestamp);
+
+  // Get the current date and time
+  const currentDate = new Date();
+
+  // Calculate the time difference in milliseconds
+  const timeDifference = currentDate - inputDate;
+
+  // Calculate the number of days
+  const daysAgo = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
+
+  // Format the time to 10:00 PM
+  const formattedTime = inputDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+  if (daysAgo === 0) {
+    // If within the same day, return the formatted time
+    return formattedTime;
+  } else if (daysAgo === 1) {
+    // If it was yesterday, return 'Yesterday at [formatted time]'
+    return `Yesterday at ${formattedTime}`;
+  } else {
+    // If it was more than one day ago, return '[daysAgo] days ago'
+    return `${daysAgo} days ago`;
+  }
     },
   },
   

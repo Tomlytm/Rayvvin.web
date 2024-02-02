@@ -7,6 +7,7 @@ import Blogs from '../views/Blogs.vue'
 import BlogPost from '../views/BlogPost.vue'
 import MyOrders from '../views/MyOrders.vue'
 import Settings from '../views/Settings.vue'
+import Messaging from '../views/Messaging.vue'
 import Billing from '../views/Billing.vue'
 import Dashboard from '../views/Dashboard.vue'
 import AdminDashboard from '../views/AdminDashboard.vue'
@@ -150,6 +151,16 @@ const router = createRouter({
       path: '/dashboard/products',
       name: 'DashboardProducts',
       component: DashboardProducts,
+      beforeEnter: (to, from) => {
+        if (store.getters.isAuthenticated && store.getters.loggedInUser.role !== 'merchant') {
+          return from.path
+        }
+      },
+    },
+    {
+      path: '/dashboard/messaging',
+      name: 'Messaging',
+      component: Messaging,
       beforeEnter: (to, from) => {
         if (store.getters.isAuthenticated && store.getters.loggedInUser.role !== 'merchant') {
           return from.path

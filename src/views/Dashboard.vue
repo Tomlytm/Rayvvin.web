@@ -204,7 +204,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="(order, index) in fetchDashboardData.topFiveRecentOrders">
+                                                <tr v-for="(order, index) in fetchDashboardData.topFiveRecentOrders" :key="index">
 
                                                     <td>#{{ order.order_number }}</td>
                                                     <td>{{ order.order_items.length }}</td>

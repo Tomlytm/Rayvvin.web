@@ -98,6 +98,14 @@
                                             </router-link>
                                         </li>
 
+                                        <li class="nav-item">
+                                            <router-link class="nav-link" :to="{name: 'Messaging'}">
+                                                <div class="d-flex align-items-center">
+                                                    <span class="nav-link-icon"> <i class="bi bi-chat"></i></span>
+                                                    <span class="nav-link-text">Messaging</span>
+                                                </div>
+                                            </router-link>
+                                        </li>
                                         <li class="nav-item" @click="logoutUser"  v-show="authenticated">
                                             <router-link class="nav-link" to="#">
                                                 <div class="d-flex align-items-center">
